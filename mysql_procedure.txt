@@ -1,19 +1,23 @@
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_addComment`(
     IN p_comment varchar(20)
+    IN p_
 )
 BEGIN
 
      
         insert into comments
         (
-            comment
+            comment,
+            rating
+
         )
         values
         (
-            p_comment
+            comment
+            rating
         );
 END $$
 DELIMITER ;
 
-CREATE TABLE comments (comment varchar(20));
+CREATE TABLE comments (comment varchar(20),rating FLOAT(5,4));
