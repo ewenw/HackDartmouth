@@ -1,5 +1,24 @@
 from flask import Flask, render_template, json, request
+import mysql.connector
+from flaskext.mysql import MySQL
 app = Flask(__name__)
+
+# mysql = MySQL()
+
+# MySQL configurations
+# app.config['MYSQL_DATABASE_USER'] = 'root'
+# app.config['MYSQL_DATABASE_PASSWORD'] = 'root'
+# app.config['MYSQL_DATABASE_DB'] = 'HackDartmouth'
+'''app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+mysql.init_app(app)'''
+
+cnx = mysql.connector.connect(user='root', password='root',
+                              host='127.0.0.1',
+                              database='HackDartmouth')
+
+# conn = mysql.connect()
+
+# cursor = conn.cursor()
 
 # basic route
 @app.route("/")
@@ -14,10 +33,29 @@ def contact():
 def signUp():
      _comment = request.form['inputComment']
 
+     #result = cursor.execute('insert into comments (comment) values ('+ _comment +');')
+
+     # result = cursor.execute("INSERT INTO HackDartmouth.comments (comment) VALUES (?)", (_comment))
+
+     # cursor.callproc('sp_addComment', (_comment))
+     cursor1 = cnx.cursor()
+
+     sqltext = "INSERT INTO HackDartmouth.comments (comment) VALUES ('"+_comment+"')"
+
+     result = cursor1.execute(sqltext)
+
+     cnx.commit()
+
+     cnx.close()
+
+     # data = cursor.fetchall()
+
      if _comment:
-     	return json.dumps({'html':'All fields good!'})
+     	return json.dumps({'html':result})
      else:
      	return json.dumps({'html':'enter the required fields'})
+
+
 
 if __name__ == "__main__":
     app.run()
