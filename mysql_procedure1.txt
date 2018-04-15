@@ -20,4 +20,4 @@ BEGIN
 END $$
 DELIMITER ;
 
-CREATE TABLE comments (comment varchar(20),rating FLOAT(5,4));
+CREATE TABLE comments (comment TEXT,rating FLOAT(5,4));

@@ -8,6 +8,7 @@ import json
 import string
 import nltk
 import configparser
+import re
 
 #import pandas as pd
 
@@ -73,6 +74,8 @@ def signUp():
 
 
      cursor1 = cnx.cursor()
+
+     _comment = re.escape(_comment)
 
      sqltext = "INSERT INTO HackDartmouth.comments (comment, rating) VALUES ('"+_comment+"', "+ str(predicted_rating[0]) +")"
      print(sqltext)
