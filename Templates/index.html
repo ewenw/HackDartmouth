@@ -1,29 +1,25 @@
 {% extends "layout.html" %}
 {% block content %}
-    <div class="container">
-            <div class="row">
-                <div class="text-center col-md-6 offset-md-3">            
-                    <h3 class="text-muted"><img src="/static/images/hackdartmouth.png" style="height: 250px;">HackDartmouth App</h3>
-                </div>
-            </div>
-        </div>
+   
  <div class="row">
      <div class="col-sm-6 text-center offset-sm-3">
          <div class="jumbotron">
-            <h1>Predict Rating From a Facebook Comment</h1>
-            <form class="form-signin" id="form">
+            <h1>Generate this comment's rating</h1>
+            <form class="form-signin" id="form" method="POST" action="/signUp">
                 <label for="inputComment" class="sr-only">Comment</label>
                 <!--<input type="textArea" name="inputComment" id="comment" class="form-control" placeholder="Comment" required autofocus>-->
 
                 <textarea name="inputComment" form="form" style="width: 100%; overflow-y: scroll;" rows="5"></textarea>
 
                  
-                <button id="btnSignUp" class="btn btn-lg btn-primary btn-block" type="button">Enter Comment</button>
+                <button id="btnSignUp" class="btn btn-lg btn-primary btn-block" type="submit">Enter Comment</button>
               </form>
       </div>
      </div>
  </div>
-        
+ <center>
+ Check out our <a href="/layup">generated ratings</a> of Dartmouth professors.
+      
     <div class="row">
         <div class="col-sm-6 offset-sm-3">
             <footer class="footer">
@@ -31,10 +27,8 @@
         </footer>
         </div>
     </div>
-        
+   </center>       
  
     </div>
 
-    <script src="/static/js/jquery.js"></script>
-    <script src="/static/js/post.js"></script>
 {% endblock %}

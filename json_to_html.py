@@ -1,4 +1,4 @@
-def jsonToHTML(input):
+def json_to_html(input):
      html = '<table class="table table-striped" style="width:100%">'
      html+="<tr>"
      for key in input[0]:
@@ -9,4 +9,5 @@ def jsonToHTML(input):
           for key in input[row]:
                html+='<td scope="col">' + str(input[row][key]) + "</td>"
           html+="</tr>"
+     html += "</table>"
      return html

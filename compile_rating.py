@@ -5,7 +5,7 @@ import string
 import nltk
 import configparser
 import re
-import jsonToHTML
+import json_to_html
 
 # takes layup JSON reviews and outputs courses / professors
 # with predictions
@@ -36,17 +36,19 @@ vectorizor = pickle.load(open(filename_vec, 'rb'))
 #################################################
 # ALGORITHM
 # load json object
+
 reviews = json.load(open('layup_reviews.json'))
+# filter out empty comments and bad ones
+def filter_pred(json):
+    return "comments" in json and len(json["comments"]) > 0 and "department" in json
+reviews = list(filter(filter_pred, reviews))
+print(reviews)
 # sort by course codes (append department attribute with number)
 def get_course_code(json):
     return json["department"] + json["number"]
 reviews.sort(key=get_course_code)
 
-# filter out empty comments
-def filter_pred(json):
-    return len(json["comments"]) > 0
-reviews = filter(filter_pred, reviews)
-print(reviews)
+
 
 
 # sorts each course's sublist by professor's name
@@ -73,6 +75,8 @@ prev_prof = ""
 prev_course = ""
 for review in sectioned_reviews:
     full_review = ""
+    if "oldReview" in review["comments"]:
+        full_review += review["comments"]["oldReview"]
     if "course" in review["comments"]:
         full_review += review["comments"]["course"]
     if "professor" in review["comments"]:

@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block content %}
+<center>
+<h2>Generated Ratings of Dartmouth Professors</h2>
+<br />
+<p>
+    User-generated from layup and rated with our model trained through Yelp reviews.
+</p>
+
+<br />
+<table class="table table-striped" style="width:100%">
+    <thead>
+  <tr>
+     <th>Course Code</th>
+     <th>Professor</th>
+     <th>Average Generated Rating</th>
+  </tr>
+ </thead>
+{% for data in post %}
+  <tr>
+      <td>{{data.course}}</td>
+    <td>{{data.professor}}</td>
+    <td>{{data.rating}}</td>
+  </tr>
+{% endfor %}
+</table>
+    </center>
+{% endblock %}

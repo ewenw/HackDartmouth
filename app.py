@@ -1,7 +1,4 @@
 from flask import Flask, render_template, json, request
-
-import mysql.connector
-from flaskext.mysql import MySQL
 import pickle
 import os
 import json
@@ -9,24 +6,13 @@ import string
 import nltk
 import configparser
 import re
-import jsonToHTML
+import json_to_html
+import sys
 
 #import pandas as pd
 
 app = Flask(__name__)
 
-# mysql = MySQL()
-
-# MySQL configurations
-# app.config['MYSQL_DATABASE_USER'] = 'root'
-# app.config['MYSQL_DATABASE_PASSWORD'] = 'root'
-# app.config['MYSQL_DATABASE_DB'] = 'HackDartmouth'
-'''app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-mysql.init_app(app)'''
-
-cnx = mysql.connector.connect(user='root', password='root',
-                              host='127.0.0.1',
-                              database='HackDartmouth')
 
 def stem_tokens(tokens):
     stemmed = []
@@ -59,47 +45,22 @@ vectorizor = pickle.load(open(filename_vec, 'rb'))
 def main():
     return render_template('index.html')
 
-@app.route('/contact')
-def contact():
-     return render_template('contact.html')
-
 @app.route('/layup',methods=['GET'])
 def layup():
-     raw = [{'department':'cosc', 'number': 76}, {'department':'ears', 'number': 3}]
-     return jsonToHTML.jsonToHTML(raw)
+     raw = json.load(open('parsed.json'))
+     return render_template("results.html", post=raw)
+
 
 @app.route('/signUp',methods=['POST'])
 def signUp():
      _comment = request.form['inputComment']
-
-     # parse comment 
-
-
      features = vectorizor.transform([_comment])
      predicted_rating = classifier.predict(features)
-
-
-     cursor1 = cnx.cursor()
-
-     _comment = re.escape(_comment)
-
-     sqltext = "INSERT INTO HackDartmouth.comments (comment, rating) VALUES ('"+_comment+"', "+ str(predicted_rating[0]) +")"
-     print(sqltext)
-
-     result = cursor1.execute(sqltext)
-     print('oh yeah')
-
-     cnx.commit()
-
-
-     # data = cursor.fetchall()
-
-     if _comment:
-        return json.dumps({'html':result})
-     else:
-        return json.dumps({'html':'enter the required fields'})
-
-
-
+     
+     raw={"rating":str(predicted_rating)}
+     print(str(raw), file=sys.stdout)
+     sys.stdout.flush()
+     return render_template("rate_result.html", post=raw)
+    
 if __name__ == "__main__":
     app.run()
