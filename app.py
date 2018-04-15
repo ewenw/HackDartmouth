@@ -9,6 +9,7 @@ import string
 import nltk
 import configparser
 import re
+import jsonToHTML
 
 #import pandas as pd
 
@@ -42,7 +43,7 @@ def tokenize(paragraph):
             tokens.append(word)
     stems = stem_tokens(tokens)
     return stems
-
+     
 
 filename_model = 'classifier.pkl'
 classifier = pickle.load(open(filename_model, 'rb'))
@@ -64,7 +65,7 @@ def contact():
 
 @app.route('/layup',methods=['POST'])
 def layup():
-
+     return ''
 
 @app.route('/signUp',methods=['POST'])
 def signUp():
