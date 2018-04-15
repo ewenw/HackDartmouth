@@ -44,7 +44,6 @@ def tokenize(paragraph):
     stems = stem_tokens(tokens)
     return stems
      
-print(jsonToHTML.jsonToHTML('34'))
 
 filename_model = 'classifier.pkl'
 classifier = pickle.load(open(filename_model, 'rb'))
@@ -64,9 +63,10 @@ def main():
 def contact():
      return render_template('contact.html')
 
-@app.route('/layup',methods=['POST'])
+@app.route('/layup',methods=['GET'])
 def layup():
-     return ''
+     raw = [{'department':'cosc', 'number': 76}, {'department':'ears', 'number': 3}]
+     return jsonToHTML.jsonToHTML(raw)
 
 @app.route('/signUp',methods=['POST'])
 def signUp():
