@@ -48,6 +48,9 @@ def main():
 @app.route('/layup',methods=['GET'])
 def layup():
      raw = json.load(open('parsed.json'))
+     for msg in raw:
+        msg["rating"] = msg["rating"].replace("[", "").replace("]","")
+ 
      return render_template("results.html", post=raw)
 
 
