@@ -1,4 +1,5 @@
 from flask import Flask, render_template, json, request
+
 import mysql.connector
 from flaskext.mysql import MySQL
 import pickle
@@ -6,6 +7,8 @@ import os
 import json
 import string
 import nltk
+import configparser
+
 #import pandas as pd
 
 app = Flask(__name__)
@@ -22,6 +25,23 @@ mysql.init_app(app)'''
 cnx = mysql.connector.connect(user='root', password='root',
                               host='127.0.0.1',
                               database='HackDartmouth')
+
+def stem_tokens(tokens):
+    stemmed = []
+    for item in tokens:
+        stemmed.append(item)
+        #stemmed.append(stemmer.stem(lemmatizer.lemmatize(item)))
+        #stemmed.append(lemmatizer.lemmatize(item))
+    return stemmed
+
+def tokenize(paragraph):
+    tokens = []
+    for sentence in nltk.sent_tokenize(paragraph):
+        for word in nltk.word_tokenize(sentence):
+            tokens.append(word)
+    stems = stem_tokens(tokens)
+    return stems
+
 
 filename_model = 'classifier.pkl'
 classifier = pickle.load(open(filename_model, 'rb'))
@@ -48,18 +68,20 @@ def signUp():
      # parse comment 
 
 
-     features = vect.transform([_comment])
-     predicted_rating = loaded_model.predict(features)
+     features = vectorizor.transform([_comment])
+     predicted_rating = classifier.predict(features)
+
 
      cursor1 = cnx.cursor()
 
-     sqltext = "INSERT INTO HackDartmouth.comments (comment, rating) VALUES ('"+_comment+"', "+ str(predicted_rating) +")"
+     sqltext = "INSERT INTO HackDartmouth.comments (comment, rating) VALUES ('"+_comment+"', "+ str(predicted_rating[0]) +")"
+     print(sqltext)
 
      result = cursor1.execute(sqltext)
+     print('oh yeah')
 
      cnx.commit()
 
-     cnx.close()
 
      # data = cursor.fetchall()
 
