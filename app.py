@@ -47,17 +47,14 @@ def signUp():
 
      # parse comment 
 
+     predicted_rating = 5
+
      # features = vect.transform([_comment])
      # predicted_rating = loaded_model.predict(features)
 
-     #result = cursor.execute('insert into comments (comment) values ('+ _comment +');')
-
-     # result = cursor.execute("INSERT INTO HackDartmouth.comments (comment) VALUES (?)", (_comment))
-
-     # cursor.callproc('sp_addComment', (_comment))
      cursor1 = cnx.cursor()
 
-     sqltext = "INSERT INTO HackDartmouth.comments (comment) VALUES ('"+_comment+"')"
+     sqltext = "INSERT INTO HackDartmouth.comments (comment, rating) VALUES ('"+_comment+"', "+ str(predicted_rating) +")"
 
      result = cursor1.execute(sqltext)
 
