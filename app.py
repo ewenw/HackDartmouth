@@ -6,7 +6,7 @@ import os
 import json
 import string
 import nltk
-import pandas as pd
+#import pandas as pd
 
 app = Flask(__name__)
 
