@@ -62,6 +62,10 @@ def main():
 def contact():
      return render_template('contact.html')
 
+@app.route('/layup',methods=['POST'])
+def layup():
+
+
 @app.route('/signUp',methods=['POST'])
 def signUp():
      _comment = request.form['inputComment']
