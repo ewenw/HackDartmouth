@@ -44,6 +44,7 @@ def tokenize(paragraph):
     stems = stem_tokens(tokens)
     return stems
      
+print(jsonToHTML.jsonToHTML('34'))
 
 filename_model = 'classifier.pkl'
 classifier = pickle.load(open(filename_model, 'rb'))
