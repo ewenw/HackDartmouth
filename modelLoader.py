@@ -1,8 +1,5 @@
 
-import pickle
 
-filename = 'model.sav'
-loaded_model = pickle.load(open(filename, 'rb'))
 
 
 # new post: parse, predict, send back to user, store original text + score into SQL

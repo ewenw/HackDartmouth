@@ -1,12 +1,12 @@
 from flask import Flask, render_template, json, request
 import mysql.connector
 from flaskext.mysql import MySQL
-#import pickleimport 
-#import os
-##import json
-##import string
-#import nltk
-#import pandas as pd
+import pickle
+import os
+import json
+import string
+import nltk
+import pandas as pd
 
 app = Flask(__name__)
 
@@ -23,10 +23,10 @@ cnx = mysql.connector.connect(user='root', password='root',
                               host='127.0.0.1',
                               database='HackDartmouth')
 
-#filename_model = 'model.pkl'
-#loaded_model = pickle.load(open(filename_model, 'rb'))
-#filename_vec = 'vectorizor.pkl'
-#vectorizor = pickle.load(open(filename_vec, 'rb'))
+filename_model = 'classifier.pkl'
+classifier = pickle.load(open(filename_model, 'rb'))
+filename_vec = 'vectorizor.pkl'
+vectorizor = pickle.load(open(filename_vec, 'rb'))
 
 # conn = mysql.connect()
 
@@ -47,10 +47,9 @@ def signUp():
 
      # parse comment 
 
-     predicted_rating = 5
 
-     # features = vect.transform([_comment])
-     # predicted_rating = loaded_model.predict(features)
+     features = vect.transform([_comment])
+     predicted_rating = loaded_model.predict(features)
 
      cursor1 = cnx.cursor()
 
