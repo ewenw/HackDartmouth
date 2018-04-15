@@ -57,7 +57,7 @@ def signUp():
      features = vectorizor.transform([_comment])
      predicted_rating = classifier.predict(features)
      
-     raw={"rating":str(predicted_rating)}
+     raw={"rating":str(predicted_rating[0])}
      print(str(raw), file=sys.stdout)
      sys.stdout.flush()
      return render_template("rate_result.html", post=raw)
