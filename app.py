@@ -11,6 +11,7 @@ import sys
 
 #import pandas as pd
 
+global stem_tokens
 def stem_tokens(tokens):
     stemmed = []
     for item in tokens:
@@ -19,6 +20,7 @@ def stem_tokens(tokens):
         #stemmed.append(lemmatizer.lemmatize(item))
     return stemmed
 
+global tokenize
 def tokenize(paragraph):
     tokens = []
     for sentence in nltk.sent_tokenize(paragraph):
@@ -29,7 +31,10 @@ def tokenize(paragraph):
 
 app = Flask(__name__)
 
-
+with open('classifier.pkl', 'rb') as f:
+    classifier = pickle.load(f)
+with open('vectorizor.pkl', 'rb') as f:
+    vectorizor = pickle.load(f)
      
 
 
@@ -53,11 +58,6 @@ def layup():
 
 @app.route('/signUp',methods=['POST'])
 def signUp():
-    with open('classifier.pkl', 'rb') as f:
-        classifier = pickle.load(f)
-    with open('vectorizor.pkl', 'rb') as f:
-        vectorizor = pickle.load(f)
-
     _comment = request.form['inputComment']
     features = vectorizor.transform([_comment])
     predicted_rating = classifier.predict(features)
