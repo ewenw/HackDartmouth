@@ -11,9 +11,6 @@ import sys
 
 #import pandas as pd
 
-app = Flask(__name__)
-
-
 def stem_tokens(tokens):
     stemmed = []
     for item in tokens:
@@ -29,6 +26,10 @@ def tokenize(paragraph):
             tokens.append(word)
     stems = stem_tokens(tokens)
     return stems
+
+app = Flask(__name__)
+
+
      
 
 filename_model = 'classifier.pkl'
@@ -42,7 +43,7 @@ vectorizor = pickle.load(open(filename_vec, 'rb'))
 
 # basic route
 @app.route("/")
-def main():
+def home():
     return render_template('index.html')
 
 @app.route('/layup',methods=['GET'])
