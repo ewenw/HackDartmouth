@@ -10,6 +10,7 @@ import json_to_html
 import sys
 import tokenizer
 from tokenizer import Tokenizer
+import logging
 
 #import pandas as pd
 
