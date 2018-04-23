@@ -15,7 +15,8 @@ from tokenizer import Tokenizer
 
 app = Flask(__name__)
 
-
+app.logger.addHandler(logging.StreamHandler(sys.stdout))
+app.logger.setLevel(logging.ERROR)
 
 filename_model = 'classifier.pkl'
 classifier = pickle.load(open(filename_model, 'rb'))
