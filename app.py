@@ -14,7 +14,7 @@ import logging
 
 #import pandas as pd
 
-app = Flask(__name__, template_folder='Templates')
+app = Flask(__name__, template_folder='html_templates')
 
 app.logger.addHandler(logging.StreamHandler(sys.stdout))
 app.logger.setLevel(logging.ERROR)
