@@ -47,5 +47,5 @@ def signUp():
     print(str(raw), file=sys.stdout)
     sys.stdout.flush()
     return render_template("rate_result.html", post=raw)
-    
-app.run()
+if __name__ == '__main__':
+    app.run()
