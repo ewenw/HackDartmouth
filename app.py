@@ -8,31 +8,13 @@ import configparser
 import re
 import json_to_html
 import sys
+import tokenizer
+from tokenizer import Tokenizer
 
 #import pandas as pd
 
 app = Flask(__name__)
 
-
-class Tokenizer():
-    def stem_tokens(self, tokens):
-        stemmed = []
-        for item in tokens:
-            stemmed.append(item)
-            #stemmed.append(stemmer.stem(lemmatizer.lemmatize(item)))
-            #stemmed.append(lemmatizer.lemmatize(item))
-        return stemmed
-
-    def tokenize(self, paragraph):
-        tokens = []
-        for sentence in nltk.sent_tokenize(paragraph):
-            for word in nltk.word_tokenize(sentence):
-                tokens.append(word)
-        stems = self.stem_tokens(tokens)
-        return stems
-    
-tokenizer = Tokenizer()
-     
 
 filename_model = 'classifier.pkl'
 classifier = pickle.load(open(filename_model, 'rb'))
