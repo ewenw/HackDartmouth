@@ -15,7 +15,7 @@ app = Flask(__name__)
 
 
 class Tokenizer():
-    def stem_tokens(tokens):
+    def stem_tokens(self, tokens):
         stemmed = []
         for item in tokens:
             stemmed.append(item)
@@ -28,7 +28,7 @@ class Tokenizer():
         for sentence in nltk.sent_tokenize(paragraph):
             for word in nltk.word_tokenize(sentence):
                 tokens.append(word)
-        stems = stem_tokens(tokens)
+        stems = self.stem_tokens(tokens)
         return stems
     
 tokenizer = Tokenizer()
