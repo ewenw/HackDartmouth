@@ -16,14 +16,9 @@ from tokenizer import Tokenizer
 app = Flask(__name__)
 
 
+
 filename_model = 'classifier.pkl'
 classifier = pickle.load(open(filename_model, 'rb'))
-filename_vec = 'vectorizor.pkl'
-vectorizor = pickle.load(open(filename_vec, 'rb'))
-
-# conn = mysql.connect()
-
-# cursor = conn.cursor()
 
 # basic route
 @app.route("/")
@@ -41,13 +36,16 @@ def layup():
 
 @app.route('/signUp',methods=['POST'])
 def signUp():
-     _comment = request.form['inputComment']
-     features = vectorizor.transform([_comment])
-     predicted_rating = classifier.predict(features)
-     
-     raw={"rating":str(predicted_rating[0])}
-     print(str(raw), file=sys.stdout)
-     sys.stdout.flush()
-     return render_template("rate_result.html", post=raw)
+    tokenizer = Tokenizer()
+    filename_vec = 'vectorizor.pkl'
+    vectorizor = pickle.load(open(filename_vec, 'rb'))
+    _comment = request.form['inputComment']
+    features = vectorizor.transform([_comment])
+    predicted_rating = classifier.predict(features)
+
+    raw={"rating":str(predicted_rating[0])}
+    print(str(raw), file=sys.stdout)
+    sys.stdout.flush()
+    return render_template("rate_result.html", post=raw)
     
 app.run()
