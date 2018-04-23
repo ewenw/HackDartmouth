@@ -8,8 +8,6 @@ import configparser
 import re
 import json_to_html
 import sys
-import tokenizer
-from tokenizer import Tokenizer
 import logging
 
 #import pandas as pd
@@ -21,6 +19,8 @@ app.logger.setLevel(logging.ERROR)
 
 filename_model = 'classifier.pkl'
 classifier = pickle.load(open(filename_model, 'rb'))
+filename_vec = 'vectorizor.pkl'
+vectorizor = pickle.load(open(filename_vec, 'rb'))
 
 # basic route
 @app.route("/")
@@ -38,9 +38,7 @@ def layup():
 
 @app.route('/signUp',methods=['POST'])
 def signUp():
-    tokenizer = Tokenizer()
-    filename_vec = 'vectorizor.pkl'
-    vectorizor = pickle.load(open(filename_vec, 'rb'))
+    
     _comment = request.form['inputComment']
     features = vectorizor.transform([_comment])
     predicted_rating = classifier.predict(features)
@@ -51,6 +49,4 @@ def signUp():
     return render_template("rate_result.html", post=raw)
 
 if __name__ == '__main__':
-    from tokenizer import Tokenizer
-    tokenizer = Tokenizer()
     app.run()
