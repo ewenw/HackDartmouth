@@ -49,5 +49,8 @@ def signUp():
     print(str(raw), file=sys.stdout)
     sys.stdout.flush()
     return render_template("rate_result.html", post=raw)
+
 if __name__ == '__main__':
+    from tokenizer import Tokenizer
+    tokenizer = Tokenizer()
     app.run()
